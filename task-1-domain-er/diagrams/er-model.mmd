@@ -1,0 +1,70 @@
+erDiagram
+	direction TB
+	BOOK {
+		int book_id PK ""  
+		string title  ""  
+		string description  ""  
+	}
+
+	EDITION {
+		int edition_id PK ""  
+		string isbn  ""  
+		int publication_year  ""  
+		decimal price  ""  
+		int stock_quantity  ""  
+		int book_id FK ""  
+		int publisher_id FK ""  
+	}
+
+	AUTHOR {
+		int author_id PK ""  
+		string full_name  ""  
+	}
+
+	GENRE {
+		int genre_id PK ""  
+		string name  ""  
+	}
+
+	ORDER_ITEM {
+		int order_item_id PK ""  
+		int quantity  ""  
+		decimal unit_price  ""  
+		int order_id FK ""  
+		int edition_id FK ""  
+	}
+
+	PUBLISHER {
+		int publisher_id PK ""  
+		string name  ""  
+	}
+
+	ORDER {
+		int order_id PK ""  
+		datetime created_at  ""  
+		string status  ""  
+		string contact_name  ""  
+		string contact_email  ""  
+		string contact_phone  ""  
+		string payment_method  ""  
+		string delivery_service  ""  
+		string pickup_point_type  ""  
+		string pickup_point_code  ""  
+		string pickup_point_address  ""  
+		int customer_id FK "optional"  
+	}
+
+	USER {
+		int user_id PK ""  
+		string full_name  ""  
+		string email  ""  
+		string phone  ""  
+	}
+
+	BOOK||--o{EDITION:"has"
+	BOOK}o--||AUTHOR:"written by"
+	BOOK}o--||GENRE:"belongs to"
+	EDITION||--o{ORDER_ITEM:"contains"
+	EDITION||--||PUBLISHER:"published by"
+	ORDER||--o{ORDER_ITEM:"includes"
+	ORDER}o--||USER:"placed by"
