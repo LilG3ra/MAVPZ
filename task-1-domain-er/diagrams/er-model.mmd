@@ -1,70 +1,73 @@
 erDiagram
-	direction TB
-	BOOK {
-		int book_id PK ""  
-		string title  ""  
-		string description  ""  
-	}
+    direction TB
 
-	EDITION {
-		int edition_id PK ""  
-		string isbn  ""  
-		int publication_year  ""  
-		decimal price  ""  
-		int stock_quantity  ""  
-		int book_id FK ""  
-		int publisher_id FK ""  
-	}
+    BOOK {
+        int book_id PK ""
+        string title ""
+        string description ""
+        int author_id FK "required"
+        int genre_id FK "required"
+    }
 
-	AUTHOR {
-		int author_id PK ""  
-		string full_name  ""  
-	}
+    EDITION {
+        int edition_id PK ""
+        string isbn UK ""
+        int publication_year ""
+        decimal price ""
+        int stock_quantity ""
+        int book_id FK ""
+        int publisher_id FK ""
+    }
 
-	GENRE {
-		int genre_id PK ""  
-		string name  ""  
-	}
+    AUTHOR {
+        int author_id PK ""
+        string full_name ""
+    }
 
-	ORDER_ITEM {
-		int order_item_id PK ""  
-		int quantity  ""  
-		decimal unit_price  ""  
-		int order_id FK ""  
-		int edition_id FK ""  
-	}
+    GENRE {
+        int genre_id PK ""
+        string name ""
+    }
 
-	PUBLISHER {
-		int publisher_id PK ""  
-		string name  ""  
-	}
+    ORDER_ITEM {
+        int order_item_id PK ""
+        int quantity ""
+        decimal unit_price ""
+        int order_id FK ""
+        int edition_id FK ""
+    }
 
-	ORDER {
-		int order_id PK ""  
-		datetime created_at  ""  
-		string status  ""  
-		string contact_name  ""  
-		string contact_email  ""  
-		string contact_phone  ""  
-		string payment_method  ""  
-		string delivery_service  ""  
-		string pickup_point_type  ""  
-		string pickup_point_code  ""  
-		string pickup_point_address  ""  
-		int customer_id FK "optional"  
-	}
+    PUBLISHER {
+        int publisher_id PK ""
+        string name ""
+    }
 
-	USER {
-		int user_id PK ""  
-		string full_name  ""  
-		string email  ""  
-		string phone  ""  
-	}
+    ORDER {
+        int order_id PK ""
+        datetime created_at ""
+        string status ""
+        string contact_name ""
+        string contact_email ""
+        string contact_phone ""
+        string payment_method ""
+        string delivery_service ""
+        string pickup_point_type ""
+        string pickup_point_code ""
+        string pickup_point_address ""
+        int user_id FK "optional"
+    }
 
-	BOOK||--o{EDITION:"has"
-	BOOK}o--||AUTHOR:"written by"
-	BOOK}o--||GENRE:"belongs to"
-	EDITION||--o{ORDER_ITEM:"contains"
-	EDITION||--||PUBLISHER:"published by"
-	ORDER||--o{ORDER_ITEM:"includes"
-	ORDER}o--||USER:"placed by"
+    USER {
+        int user_id PK ""
+        string full_name ""
+        string email ""
+        string phone ""
+    }
+
+    BOOK ||--o{ EDITION : "has"
+    BOOK }o--|| AUTHOR : "written by"
+    BOOK }o--|| GENRE : "belongs to"
+    EDITION ||--o{ ORDER_ITEM : "contains"
+    EDITION }o--|| PUBLISHER : "published by"
+    ORDER ||--|{ ORDER_ITEM : "includes"
+    USER o|--o{ ORDER : "places"
