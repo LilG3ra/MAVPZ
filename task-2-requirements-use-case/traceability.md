@@ -2,7 +2,7 @@
 
 ## Призначення
 
-Цей документ пов'язує функціональні вимоги EARS із відповідними сценаріями використання (Use Cases) та перевірками Gherkin. Джерело вимог — [requirements/functional.md](task-2-requirements-use-case/requirements/functional.md), а перелік основних UC відповідає [/diagrams/UC.md](task-2-requirements-use-case/diagrams/UC.md).
+Цей документ пов'язує функціональні вимоги EARS із відповідними сценаріями використання (Use Cases) та перевірками Gherkin. Джерело вимог — [requirements/functional.md](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/requirements/functional.md), а перелік основних UC відповідає [use-cases.md](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/use-cases.md).
 
 ## Зв'язок функціональних вимог із Use Cases та Gherkin
 
