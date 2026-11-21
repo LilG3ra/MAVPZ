@@ -22,19 +22,65 @@
 
 ## 2. Топ-3 розбіжності, які я знайшла та виправила (spec ↔ вихід ШІ)
 
+**1) Непотрібний зв'язок між переглядом каталогу та пошуком книги.**
 
+У першому варіанті UC-діаграми Mermaid додав стрілку між UC-01 "Переглянути каталог книг" та UC-02 "Знайти книгу". Це не відповідало моїй специфікації, оскільки перегляд каталогу та пошук книги є окремими можливостями покупця. Тому, вирішила прибрати цей зв'язок, щоб діаграма не показувала зайву залежність між сценаріями. Покупець повинен мати можливість як переглядати каталог, так і самостійно шукати книги.
 
-**3) Замовлення могло не містити жодної позиції.**
+**Мій слід:**
 
+- [Промпт 05 — Створення Use Case-діаграми][ai/05-prompt.md](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/ai/05-prompt.md).
+- [Огляд 05 — Аналіз Use Case-діаграми][ai/05-review.md](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/ai/05-review.md).
+- [Специфікація](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/spec.md).
+- [Актуальна Use Case-діаграма](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/diagrams/use-cases.md).
 
+**Коміти роботи над виправленнями:**
+- [488ca86 — Добавлено експортовану діаграму UC з Mermaid](https://github.com/LilG3ra/MAVPZ/commit/488ca86).
+- [0540b2c — Створено UC.md до діаграми](https://github.com/LilG3ra/MAVPZ/commit/0540b2c).
+- [d98b935 — Замінено діаграму UC на актуальну](https://github.com/LilG3ra/MAVPZ/commit/b98b935).
+- [b8e0d5c — Виправлено діаграму](https://github.com/LilG3ra/MAVPZ/commit/b8e0d5c).
+- [6155c31 — Оновлено код діаграми](https://github.com/LilG3ra/MAVPZ/commit/6155c31).
+- [ec84b2d — update: Видалено діаграму для подалі коректного завантаження](https://github.com/LilG3ra/MAVPZ/commit/ec84b2d).
+- [f7c0281 — fix: Повторно завантажено діаграму](https://github.com/LilG3ra/MAVPZ/commit/f7c0281).
 
-**Додаткові коміти, які підтверджують роботу:**
+**2) Неправильний зв'язок між пошуком книги та переглядом інформації.**
 
+У початковій діаграмі UC-02 "Знайти книгу" був з'єднаний стрілкою з UC-03 "Переглянути інформацію про книгу та видання". Через це могло скластися враження, що перегляд інформації обов'язково починається з пошуку. Але покупець може відкрити сторінку книги й безпосередньо з каталогу. Тому я вирішила залишити UC-02 та UC-03 окремими сценаріями й прибрати зайву стрілку між ними.
 
+**Мій слід:**
+
+- [Промпт 05 — Створення Use Case-діаграми][ai/05-prompt.md](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/ai/05-prompt.md).
+- [Огляд 05 — Аналіз Use Case-діаграми][ai/05-review.md](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/ai/05-review.md).
+- [Опис Use Cases](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/ai/05-review.md)..
+- [Актуальна Use Case-діаграма](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/use-cases.md).
+
+**Коміти роботи над виправленнями:**
+
+- [b8e0d5c — Виправлено діаграму](https://github.com/LilG3ra/MAVPZ/commit/b8e0d5c).
+- [d98b935 — Замінено діаграму UC на актуальну](https://github.com/LilG3ra/MAVPZ/commit/b98b935).
+- [f7c0281 — fix: Повторно завантажено діаграму](https://github.com/LilG3ra/MAVPZ/commit/f7c0281).
+
+**3) Зайвий зв'язок між оформленням та опрацюванням замовлення.**
+
+На початковій діаграмі UC-04 "Оформити замовлення" був з'єднаний із UC-05 "Опрацювати замовлення". Це неправильно відображало взаємодію акторів, оскільки покупець оформлює замовлення, а працівник магазину опрацьовує його окремо. Я вирішила прибрати цей зв'язок і залишити тільки необхідні асоціації акторів зі сценаріями. Також на діаграмі залишила один зв'язок `include` між UC-04 та перевіркою наявності примірників, тому що така перевірка обов'язкова під час оформлення замовлення. Завдяки цьому фінальна діаграма стала простішою та краще відповідає бізнес-правилам мого онлайн-магазину.
+
+**Мій слід:**
+
+- [Промпт 05 — Створення Use Case-діаграми][ai/05-prompt.md](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/ai/05-prompt.md).
+- [Огляд 05 — Аналіз Use Case-діаграми][ai/05-review.md](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/ai/05-review.md).
+- [Специфікація](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/spec.md).
+- [ADR-03 — Вибір зв'язків на Use Case-діаграмі](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/adr/03-use-case-relations.md).
+
+**Коміти роботи над виправленнями:**
+
+- [d98b935 — Замінено діаграму UC на актуальну](https://github.com/LilG3ra/MAVPZ/commit/b98b935).
+- [f7c0281 — Повторно завантажено діаграму](https://github.com/LilG3ra/MAVPZ/commit/f7c0281).
+
+**Додаткові коміти, які підтверджують роботу над діаграмою:**
+
+- [2fa09bd — Додано код із Mermaid](https://github.com/LilG3ra/MAVPZ/commit/2fa09bd).
+- [0540b2c — Створено UC.md до діаграми](https://github.com/LilG3ra/MAVPZ/commit/0540b2c).
 
 ## 3. Ключове рішення
-
-
 
 **Обґрунтування рішень:**
 
@@ -43,7 +89,3 @@
 - [ADR-03 — Вибір зв'язків на Use Case-діаграмі](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/adr/03-use-case-relations.md)
 
 ## 4. Перевірка
-
-
-
-
