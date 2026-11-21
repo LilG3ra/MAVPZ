@@ -31,8 +31,6 @@
 ## Інструменти
 
 - Mermaid — побудова Use Case-діаграми.
-- Gherkin — опис сценаріїв використання у форматі Given / When / Then.
-- EARS — формулювання функціональних вимог.
 - GitHub — зберігання файлів та історії змін.
 - ChatGPT — допоміжний інструмент для аналізу, пояснень і перевірки.
 
@@ -40,17 +38,18 @@
 
 - `spec.md` — специфікація та критерії прийняття.
 - `use-cases.md` — опис акторів і сценаріїв використання.
-- `diagrams/use-cases.puml` — вихідний код Use Case-діаграми.
-- `diagrams/use-cases.png` — графічне представлення діаграми.
-- `scenarios/uc-03-place-order.feature` — Gherkin-сценарії складного UC-03.
-- `requirements/functional.md` — функціональні вимоги EARS.
-- `requirements/nonfunctional.md` — нефункціональні вимоги NFR.
-- `traceability.md` — матриця трасування вимог і Use Cases.
-- `adr/` — обґрунтування ключових рішень.
-- `ai/` — історія взаємодії з ШІ та матеріали для рев'ю.
-- `ASSUMPTIONS.md` — припущення, що потребують підтвердження.
-- `CHECKLIST.md` — чекліст «Готово».
-- `DEFENSE.md` — підсумковий захист лабораторної роботи.
+- `diagrams/UC.md` — опис та перегляд Use Case-діаграми.
+- `diagrams/UC.mmd` — вихідний код діаграми Mermaid.
+- `diagrams/Use-cases.png` — графічне представлення діаграми.
+- `scenarios/uc-04-order-scenario.md` — чотири Gherkin-сценарії для UC-04.
+- `requirements/functional.md` — 18 функціональних вимог EARS.
+- `requirements/non-functional.md` — 7 нефункціональних вимог NFR.
+- `traceability.md` — матриця трасування вимог, Use Cases та Gherkin.
+- `adr/` — три архітектурні рішення (ADR-01, ADR-02, ADR-03).
+- `ai/` — промпти, огляди та історія роботи з ШІ.
+- `CHECKLIST.md` — перевірка готовності завдання.
+- `DEFENSE.md` — підсумковий захист роботи.
+
 
 ## Перевірка Use Case-діаграми
 
