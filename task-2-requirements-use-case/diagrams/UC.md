@@ -6,8 +6,10 @@
 
 ## Діаграма
 
-![Use Case Diagram](task-2-requirements-use-case/diagrams/Use-cases.png)
-[Вихідний код Mermaid](task-2-requirements-use-case/diagrams/UC.mmd)
+![Use Case Diagram](Use-cases.png)
+
+[Вихідний код Mermaid](LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/diagrams/UC.mmd)
+
 [Відкрити Mermaid Live](https://mermaid.live/)
 
 ## Основні актори
