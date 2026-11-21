@@ -1,32 +1,26 @@
 flowchart LR
-    subgraph system ["Онлайн-магазин друкованих книг"]
-        UC01(["UC-01<br/>Переглянути<br/>каталог книг"])
-        UC02(["UC-02<br/>Знайти книгу"])
-        UC03(["UC-03<br/>Переглянути інформацію<br/>про книгу та видання"])
-        UC04(["UC-04<br/>Оформити<br/>замовлення"])
-        UC05(["UC-05<br/>Опрацювати<br/>замовлення"])
-        checkStock(["Перевірити<br/>наявність примірників"])
-    end
-
     buyer["Покупець"]
     staff["Працівник магазину"]
 
-    buyer -->|"використовує"| UC01
-    buyer -->|"використовує"| UC02
-    buyer -->|"використовує"| UC03
-    buyer -->|"використовує"| UC04
+    subgraph system ["Онлайн-магазин друкованих книг"]
+        UC01(["UC-01<br/>Переглянути каталог книг"])
+        UC02(["UC-02<br/>Знайти книгу"])
+        UC03(["UC-03<br/>Переглянути інформацію<br/>про книгу та видання"])
+        UC04(["UC-04<br/>Оформити замовлення"])
+        checkStock(["Перевірити наявність<br/>примірників"])
+        UC05(["UC-05<br/>Опрацювати замовлення"])
+    end
 
-    UC01 -->|"<<include>>"| UC02
-    UC02 -->|"<<include>>"| UC03
-    UC04 -->|"<<include>>"| checkStock
-
-    staff -->|"використовує"| UC05
-    UC04 -.->|"может бути опрацьовано"| UC05
+    buyer --- UC01
+    buyer --- UC02
+    buyer --- UC03
+    buyer --- UC04
+    staff --- UC05
+    UC04 -.->|"«include»"| checkStock
 
     classDef systemBoundary fill:#f0f9ff,stroke:#38bdf8,stroke-width:2px
     classDef usecase fill:#eef2ff,stroke:#818cf8,stroke-width:2px
     classDef actor fill:#fff7ed,stroke:#fb923c,stroke-width:2px
-    classDef subSystem fill:#f5f3ff,stroke:#a78bfa,stroke-width:1px
 
     class system systemBoundary
     class UC01,UC02,UC03,UC04,UC05,checkStock usecase
