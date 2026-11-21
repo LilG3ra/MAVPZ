@@ -59,7 +59,7 @@
 
 ## Пов'язані документи
 
-- [spec.md](task-2-requirements-use-case/spec.md) — основні правила онлайн-магазину.
-- [UC.md](task-2-requirements-use-case/diagrams/UC.md) — опис UC-04.
-- [functional.md](task-2-requirements-use-case/requirements/functional.md) — FR-07, FR-12, FR-13.
-- [UC-04-order-scenario.md](task-2-requirements-use-case/scenarios/UC-04-order-scenario.md) — сценарії оформлення замовлення.
+- `../spec.md` — основні правила онлайн-магазину.
+- `../use-cases.md` — опис UC-04.
+- `../requirements/functional.md` — FR-07, FR-12, FR-13.
+- `../scenarios/UC-04-order-scenario.md` — сценарії оформлення замовлення.
