@@ -8,7 +8,7 @@
 
 ![Use Case Diagram](Use-cases.png)
 
-[Вихідний код Mermaid](LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/diagrams/UC.mmd)
+[Вихідний код Mermaid](https://github.com/LilG3ra/MAVPZ/edit/main/task-2-requirements-use-case/diagrams/UC.mmd)
 
 [Відкрити Mermaid Live](https://mermaid.live/)
 
