@@ -28,15 +28,15 @@
 
 **Мій слід:**
 
-- [Промпт 05 — Створення Use Case-діаграми][ai/05-prompt.md](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/ai/05-prompt.md).
-- [Огляд 05 — Аналіз Use Case-діаграми][ai/05-review.md](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/ai/05-review.md).
+- [Промпт 05 — Створення Use Case-діаграми](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/ai/05-prompt.md).
+- [Огляд 05 — Аналіз Use Case-діаграми](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/ai/05-review.md).
 - [Специфікація](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/spec.md).
-- [Актуальна Use Case-діаграма](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/diagrams/use-cases.md).
+- [Актуальна Use Case-діаграма](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/use-cases.md).
 
 **Коміти роботи над виправленнями:**
 - [488ca86 — Добавлено експортовану діаграму UC з Mermaid](https://github.com/LilG3ra/MAVPZ/commit/488ca86).
 - [0540b2c — Створено UC.md до діаграми](https://github.com/LilG3ra/MAVPZ/commit/0540b2c).
-- [d98b935 — Замінено діаграму UC на актуальну](https://github.com/LilG3ra/MAVPZ/commit/b98b935).
+- [d98b935 — Замінено діаграму UC на актуальну](https://github.com/LilG3ra/MAVPZ/commit/d98b935).
 - [b8e0d5c — Виправлено діаграму](https://github.com/LilG3ra/MAVPZ/commit/b8e0d5c).
 - [6155c31 — Оновлено код діаграми](https://github.com/LilG3ra/MAVPZ/commit/6155c31).
 - [ec84b2d — update: Видалено діаграму для подалі коректного завантаження](https://github.com/LilG3ra/MAVPZ/commit/ec84b2d).
@@ -48,15 +48,15 @@
 
 **Мій слід:**
 
-- [Промпт 05 — Створення Use Case-діаграми][ai/05-prompt.md](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/ai/05-prompt.md).
-- [Огляд 05 — Аналіз Use Case-діаграми][ai/05-review.md](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/ai/05-review.md).
-- [Опис Use Cases](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/ai/05-review.md)..
+- [Промпт 05 — Створення Use Case-діаграми](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/ai/05-prompt.md).
+- [Огляд 05 — Аналіз Use Case-діаграми](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/ai/05-review.md).
+- [Опис Use Cases](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/ai/05-review.md).
 - [Актуальна Use Case-діаграма](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/use-cases.md).
 
 **Коміти роботи над виправленнями:**
 
 - [b8e0d5c — Виправлено діаграму](https://github.com/LilG3ra/MAVPZ/commit/b8e0d5c).
-- [d98b935 — Замінено діаграму UC на актуальну](https://github.com/LilG3ra/MAVPZ/commit/b98b935).
+- [d98b935 — Замінено діаграму UC на актуальну](https://github.com/LilG3ra/MAVPZ/commit/d98b935).
 - [f7c0281 — fix: Повторно завантажено діаграму](https://github.com/LilG3ra/MAVPZ/commit/f7c0281).
 
 **3) Зайвий зв'язок між оформленням та опрацюванням замовлення.**
@@ -65,14 +65,14 @@
 
 **Мій слід:**
 
-- [Промпт 05 — Створення Use Case-діаграми][ai/05-prompt.md](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/ai/05-prompt.md).
-- [Огляд 05 — Аналіз Use Case-діаграми][ai/05-review.md](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/ai/05-review.md).
+- [Промпт 05 — Створення Use Case-діаграми](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/ai/05-prompt.md).
+- [Огляд 05 — Аналіз Use Case-діаграми](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/ai/05-review.md).
 - [Специфікація](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/spec.md).
 - [ADR-03 — Вибір зв'язків на Use Case-діаграмі](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/adr/03-use-case-relations.md).
 
 **Коміти роботи над виправленнями:**
 
-- [d98b935 — Замінено діаграму UC на актуальну](https://github.com/LilG3ra/MAVPZ/commit/b98b935).
+- [d98b935 — Замінено діаграму UC на актуальну](https://github.com/LilG3ra/MAVPZ/commit/d98b935).
 - [f7c0281 — Повторно завантажено діаграму](https://github.com/LilG3ra/MAVPZ/commit/f7c0281).
 
 **Додаткові коміти, які підтверджують роботу над діаграмою:**
