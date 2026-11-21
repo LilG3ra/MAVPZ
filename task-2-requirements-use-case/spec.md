@@ -42,7 +42,7 @@
 
 **Критерій №7:** Підготовлено README, CHECKLIST, ADR, DEFENSE та задокументовано реальну взаємодію з AI.
 
-Звірка виконання критеріїв — у файлі [CHECKLIST.md](task-2-requirements-use-case/CHEKLIST.md).
+Звірка виконання критеріїв — у файлі [CHECKLIST.md](CHECKLIST.md).
 
 ## 6. Обмеження (Out of Scope)
 
