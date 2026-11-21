@@ -58,7 +58,7 @@
 
 1. Відкрити файл `diagrams/use-cases.puml`.
 2. Скопіювати його вміст.
-3. Перейти до редактора [https://www.plantuml.com/plantuml/uml/](https://mermaid.live/)](https://mermaid.live/).
+3. Перейти до редактора [https://mermaid.live/](https://mermaid.live/).
 4. Вставити код у редактор.
 5. Перевірити, що діаграма відображається без помилок. Готове графічне представлення збережено у файлі `diagrams/use-cases.png`.
 
