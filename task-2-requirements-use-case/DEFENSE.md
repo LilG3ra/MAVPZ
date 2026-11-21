@@ -48,28 +48,7 @@
 **Коміти:** [d98b935](https://github.com/LilG3ra/MAVPZ/commit/d98b935), [f7c0281](https://github.com/LilG3ra/MAVPZ/commit/f7c0281).
 
 
-**3) Зайвий зв'язок між оформленням та опрацюванням замовлення.**
-
-На початковій діаграмі UC-04 "Оформити замовлення" був з'єднаний із UC-05 "Опрацювати замовлення". Це неправильно відображало взаємодію акторів, оскільки покупець оформлює замовлення, а працівник магазину опрацьовує його окремо. Я вирішила прибрати цей зв'язок і залишити тільки необхідні асоціації акторів зі сценаріями. Також на діаграмі залишила один зв'язок `include` між UC-04 та перевіркою наявності примірників, тому що така перевірка обов'язкова під час оформлення замовлення. Завдяки цьому фінальна діаграма стала простішою та краще відповідає бізнес-правилам мого онлайн-магазину.
-
-**Мій слід:**
-
-- [Промпт 05 — Створення Use Case-діаграми](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/ai/05-prompt.md).
-- [Огляд 05 — Аналіз Use Case-діаграми](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/ai/05-review.md).
-- [Специфікація](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/spec.md).
-- [ADR-03 — Вибір зв'язків на Use Case-діаграмі](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/adr/03-use-case-relations.md).
-
-**Коміти роботи над виправленнями:**
-
-- [d98b935 — Замінено діаграму UC на актуальну](https://github.com/LilG3ra/MAVPZ/commit/d98b935).
-- [f7c0281 — Повторно завантажено діаграму](https://github.com/LilG3ra/MAVPZ/commit/f7c0281).
-
-**Додаткові коміти, які підтверджують роботу над діаграмою:**
-
-- [2fa09bd — Додано код із Mermaid](https://github.com/LilG3ra/MAVPZ/commit/2fa09bd).
-- [0540b2c — Створено UC.md до діаграми](https://github.com/LilG3ra/MAVPZ/commit/0540b2c).
-- [b8e0d5c — Виправлено діаграму](https://github.com/LilG3ra/MAVPZ/commit/b8e0d5c).
-- [ec84b2d — update: Видалено діаграму для подалі коректного завантаження](https://github.com/LilG3ra/MAVPZ/commit/ec84b2d).
+**Додаткові коміти:** [2fa09bd — код Mermaid](https://github.com/LilG3ra/MAVPZ/commit/2fa09bd), [0540b2c — створення UC.md](https://github.com/LilG3ra/MAVPZ/commit/0540b2c), [b8e0d5c — виправлення діаграми](https://github.com/LilG3ra/MAVPZ/commit/b8e0d5c), [ec84b2d — повторне завантаження діаграми](https://github.com/LilG3ra/MAVPZ/commit/ec84b2d).
 
 ## 3. Ключове рішення
 
