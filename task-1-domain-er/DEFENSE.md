@@ -63,8 +63,8 @@
 
 **Додаткові коміти, які підтверджують роботу:**
 
-- [8578e72](https://github.com/LilG3ra/MAVPZ/commit/8578e72) — оновлено зображення ER-діаграми.
-- [5c59bef](https://github.com/LilG3ra/MAVPZ/commit/5c59bef) — оновлено опис ER-моделі згідно з виправленнями діаграми.
+- [8573e72](https://github.com/LilG3ra/MAVPZ/commit/8573e72) — оновлено зображення ER-діаграми.
+- [5cc9bef](https://github.com/LilG3ra/MAVPZ/commit/5cc9bef) — оновлено опис ER-моделі згідно з виправленнями діаграми.
 - [3d7de1f](https://github.com/LilG3ra/MAVPZ/commit/3d7de1f) — уточнено специфікацію ER-моделі.
 - [b6f97e5](https://github.com/LilG3ra/MAVPZ/commit/b6f97e5) — уточнено запит до Mermaid AI.
 
