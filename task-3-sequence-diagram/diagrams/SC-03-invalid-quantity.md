@@ -1,4 +1,4 @@
-<img width="1280" height="419" alt="image" src="https://github.com/user-attachments/assets/f8f0b844-9505-42f1-a1f2-acfcad429e39" /># Sequence Diagram — SC-03 Недопустима кількість
+# Sequence Diagram — SC-03 Недопустима кількість
 
 ## Опис
 
