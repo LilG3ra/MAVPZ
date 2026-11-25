@@ -40,7 +40,7 @@ sequenceDiagram
 
 [Відкрити Mermaid](https://mermaid.live/)
 
-[Матриця трасування](../traceability.md) - не готово
+[Матриця трасування](https://github.com/LilG3ra/MAVPZ/blob/main/task-3-sequence-diagram/traceability.md) 
 
 ## Основні учасники
 
