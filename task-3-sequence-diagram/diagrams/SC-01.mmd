@@ -61,18 +61,28 @@ sequenceDiagram
                 Note over Database: Generated orderId
 
                 loop For each order item
+                    Database->>Database: calculateItemTotal(quantity, priceSnapshot)
+                    Note over Database: itemTotal = quantity * priceSnapshot
                     Database->>Database: createOrderItem(orderId, editionId, quantity, priceSnapshot)
                     Database->>Database: updateEditionStock(editionId, quantity)
                 end
 
                 Database->>Database: commit()
-                Database-->>OrderService: orderCreated(orderId, summary)
+                Database-->>OrderService: orderCreated(orderId, savedItems[])
+                Note over OrderService: savedItems contain quantity, priceSnapshot and itemTotal
             end
             deactivate Database
 
             alt Order successfully saved
+                OrderService->>OrderService: initializeOrderSummary(orderId)
+
+                loop For each saved order item
+                    OrderService->>OrderService: addItemToSummary(editionId, quantity, priceSnapshot, itemTotal)
+                end
+
                 OrderService-->>UI: orderCreated(orderId, summary)
                 UI-->>Customer: confirmationMessage(orderId, summary)
+                Note over UI,Customer: Summary shows quantity, unit price and item total
             else Transaction rolled back
                 OrderService-->>UI: orderRejected(outOfStock)
                 UI-->>Customer: showOutOfStockError()
