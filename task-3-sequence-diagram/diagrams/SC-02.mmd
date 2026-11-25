@@ -15,7 +15,7 @@ sequenceDiagram
     activate OrderService
 
     OrderService->>OrderService: validateContacts(contactData)
-    OrderService->>OrderService: validateQuantities(items[])
+    OrderService->>OrderService: validateItems(items[])
 
     OrderService->>StockService: checkStock(editionId, quantity)
     activate StockService
