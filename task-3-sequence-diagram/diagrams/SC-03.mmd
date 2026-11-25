@@ -14,7 +14,7 @@ sequenceDiagram
     activate OrderService
 
     OrderService->>OrderService: validateContacts(contactData)
-    OrderService->>OrderService: validateQuantities(items[])
+    OrderService->>OrderService: validateItems(items[])
 
     alt Quantity is zero or negative
         Note over OrderService: quantity <= 0
