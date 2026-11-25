@@ -1,0 +1,27 @@
+sequenceDiagram
+    actor Customer as Customer
+    participant UI as OrderUI
+    participant OrderService as OrderService
+
+    Customer->>UI: selectEdition(editionId, quantity)
+    UI->>UI: displaySelectedBooks()
+    Customer->>UI: enterContactData(incompleteContactData)
+    Customer->>UI: submitOrder()
+    activate UI
+
+    UI->>OrderService: submitOrder(contactData, items[])
+    activate OrderService
+
+    OrderService->>OrderService: validateContacts(contactData)
+
+    alt Required contact data missing
+        OrderService-->>UI: orderRejected(missingContactData)
+        UI-->>Customer: showContactDataError()
+        Note over OrderService: Quantity and stock are not checked
+        Note over OrderService: ORDER and ORDER_ITEM are not created
+    else Required contact data provided
+        Note over OrderService: Continue with successful flow SC-01
+    end
+
+    deactivate OrderService
+    deactivate UI
