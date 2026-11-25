@@ -55,7 +55,7 @@ sequenceDiagram
 
 [Відкрити Mermaid Live](https://mermaid.live/)
 
-[Матриця трасування](../traceability.md)
+[Матриця трасування](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/traceability.md)
 
 ## Основні учасники
 
