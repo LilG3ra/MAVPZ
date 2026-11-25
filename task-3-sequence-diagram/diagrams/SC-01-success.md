@@ -2,7 +2,7 @@
 
 ## Опис
 
-Ця діаграма деталізує успішне оформлення замовлення в онлайн-магазині друкованих книг (UC-04 із Завдання №2). Вона показує взаємодію покупця, інтерфейсу, сервісів та сховища даних, а саме: від надсилання замовлення до підтвердження, включно з перевіркою даних, залишків видань і фіксацією ціни.
+Ця діаграма деталізує успішне оформлення замовлення в онлайн-магазині друкованих книг (UC-04 із Завдання №2). Вона показує взаємодію покупця, інтерфейсу, сервісів і сховища даних: від надсилання замовлення до підтвердження, включно з перевіркою даних і залишків, транзакційним збереженням, фіксацією ціни та розрахунком вартості позицій.
 
 ## Діаграма
 
@@ -70,18 +70,28 @@ sequenceDiagram
                 Note over Database: Generated orderId
 
                 loop For each order item
+                    Database->>Database: calculateItemTotal(quantity, priceSnapshot)
+                    Note over Database: itemTotal = quantity * priceSnapshot
                     Database->>Database: createOrderItem(orderId, editionId, quantity, priceSnapshot)
                     Database->>Database: updateEditionStock(editionId, quantity)
                 end
 
                 Database->>Database: commit()
-                Database-->>OrderService: orderCreated(orderId, summary)
+                Database-->>OrderService: orderCreated(orderId, savedItems[])
+                Note over OrderService: savedItems contain quantity, priceSnapshot and itemTotal
             end
             deactivate Database
 
             alt Order successfully saved
+                OrderService->>OrderService: initializeOrderSummary(orderId)
+
+                loop For each saved order item
+                    OrderService->>OrderService: addItemToSummary(editionId, quantity, priceSnapshot, itemTotal)
+                end
+
                 OrderService-->>UI: orderCreated(orderId, summary)
                 UI-->>Customer: confirmationMessage(orderId, summary)
+                Note over UI,Customer: Summary shows quantity, unit price and item total
             else Transaction rolled back
                 OrderService-->>UI: orderRejected(outOfStock)
                 UI-->>Customer: showOutOfStockError()
@@ -95,44 +105,46 @@ sequenceDiagram
 
 [Вихідний код Mermaid](https://github.com/LilG3ra/MAVPZ/blob/main/task-3-sequence-diagram/diagrams/SC-01.mmd)
 
-[Відкрити Mermaid](https://mermaid.live/)
+[Відкрити Mermaid Live](https://mermaid.live/)
 
-[Матриця трасування](../traceability.md) - ще не готово
+[Матриця трасування](../traceability.md)
 
 ## Основні учасники
 
-- Customer — обирає видання, зазначає кількість, вводить контактні дані та підтверджує замовлення.
-- OrderUI — приймає дані та показує результат оформлення.
-- OrderService — перевіряє замовлення, координує перевірку залишків і створення записів.
-- StockService — перевіряє доступний залишок вибраного видання.
-- Database — надає дані про видання та виконує транзакційне збереження замовлення, його позицій і змін залишків.
+- **Customer** — обирає видання, зазначає кількість, вводить контактні дані та підтверджує замовлення.
+- **OrderUI** — приймає дані й показує результат оформлення та підсумок замовлення.
+- **OrderService** — перевіряє дані, координує перевірку залишків і створення замовлення, формує підсумок із збережених позицій.
+- **StockService** — перевіряє доступні залишки обраних видань.
+- **Database** — надає інформацію про видання, транзакційно створює замовлення та позиції, фіксує ціни, обчислює вартість позицій і оновлює залишки.
 
 ## Основні кроки взаємодії
 
-- Покупець обирає видання та вказує кількість, заповнює контакти й надсилає замовлення.
-- OrderService виконує validateContacts() і validateItems(): замовлення має містити хоча б одну позицію, а кількість кожної позиції має бути додатною.
-- OrderService групує однакові видання та через StockService перевіряє, чи достатньо примірників для всіх позицій.
-- За успішної перевірки Database починає транзакцію, повторно перевіряє залишки та зчитує актуальні ціни видань.
-- Database створює ORDER, пов’язані ORDER_ITEM з orderId та priceSnapshot, оновлює залишки й завершує транзакцію.
-- OrderService передає результат інтерфейсу, який показує покупцеві підтвердження.
+- Покупець обирає видання та кількість, заповнює контакти й надсилає замовлення.
+- OrderService виконує validateContacts() і validateItems(): замовлення містить щонайменше одну позицію, кількість кожної позиції додатна.
+- OrderService групує позиції за виданням і через StockService перевіряє достатність залишків.
+- Database розпочинає транзакцію, блокує відповідні видання, повторно перевіряє залишки й фіксує актуальну ціну як priceSnapshot.
+- Database створює ORDER та пов'язані ORDER_ITEM, обчислює itemTotal = quantity * priceSnapshot, оновлює залишки й виконує commit(); якщо залишку недостатньо, виконує rollback().
+- Після успішного збереження Database повертає OrderService ідентифікатор замовлення та savedItems[] із кількістю, ціною та вартістю позицій.
+- OrderService формує summary через initializeOrderSummary() та addItemToSummary(), після чого OrderUI показує покупцеві підтвердження з кількістю, ціною одиниці й сумою позиції.
 
 ## Зв'язки між учасниками
 
-- Customer взаємодіє з OrderUI, а не з самою базою даних.
-- OrderUI передає запит на оформлення до OrderService.
-- OrderService звертається до StockService, а StockService до Database.
-- Створення ORDER і ORDER_ITEM та оновлення залишків показані всередині однієї транзакції.
-- Фрагменти loop моделюють обробку кожного видання й позиції, а фрагменти alt — успішні та помилкові результати перевірок.
+- Customer взаємодіє з OrderUI, а не безпосередньо з базою даних.
+- OrderUI передає запит до OrderService.
+- OrderService звертається до StockService, а StockService читає залишки з Database.
+- Створення ORDER і ORDER_ITEM, обчислення вартості позицій та оновлення залишків виконуються в межах транзакції Database.
+- Формування підсумку замовлення належить OrderService, який використовує збережені дані після успішного commit().
+- Фрагменти loop моделюють обробку видань і позицій, а alt — успішні та помилкові результати перевірок.
 
 ## Основні бізнес-правила
 
-- Замовлення можна оформлювати без обов’язкової реєстрації.
-- У замовленні має бути щонайменше одна позиція, а її кількість повинна бути більшою за нуль.
-- Кожна позиція ORDER_ITEM стосується конкретного EDITION та пов’язана із замовленням ORDER через orderId.
-- Сумарна замовлена кількість одного видання не повинна перевищувати залишок.
-- Ціна фіксується як priceSnapshot на момент оформлення.
-- У разі відхилення транзакції замовлення не повинно зберігатися частково.
+- Замовлення можна оформити без обов'язкової реєстрації.
+- Замовлення повинно містити щонайменше одну позицію, а кількість кожної позиції має бути більшою за нуль.
+- Кожна позиція ORDER_ITEM стосується конкретного EDITION і пов'язана з ORDER через orderId.
+- Сумарна замовлена кількість одного видання не може перевищувати доступний залишок.
+- Ціна одиниці фіксується як priceSnapshot на момент оформлення; вартість позиції дорівнює quantity * priceSnapshot (FR-14).
+- У разі rollback() замовлення не повинно зберігатися частково.
 
 ## Висновок
 
-Діаграма деталізує успішний шлях UC-04 та враховує перевірку даних, залишків, створення ORDER і ORDER_ITEM і фіксацію ціни. Альтернативні помилкові сценарії деталізовані окремо в SC-02 - SC-04.
+SC-01 деталізує успішний шлях UC-04, включно з перевіркою даних та залишків, атомарним створенням ORDER і ORDER_ITEM, фіксацією ціни, обчисленням вартості позицій і формуванням підтвердження. Помилкові сценарії окремо деталізовано в SC-02–SC-04.
