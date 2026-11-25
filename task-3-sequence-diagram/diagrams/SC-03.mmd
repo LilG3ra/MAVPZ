@@ -1,0 +1,30 @@
+sequenceDiagram
+    actor Customer as Customer
+    participant UI as OrderUI
+    participant OrderService as OrderService
+
+    Customer->>UI: selectEdition(editionId)
+    UI->>UI: displaySelectedBooks()
+    Customer->>UI: enterQuantity(quantity)
+    Customer->>UI: enterContactData(contactData)
+    Customer->>UI: submitOrder()
+    activate UI
+
+    UI->>OrderService: submitOrder(contactData, items[])
+    activate OrderService
+
+    OrderService->>OrderService: validateContacts(contactData)
+    OrderService->>OrderService: validateQuantities(items[])
+
+    alt Quantity is zero or negative
+        Note over OrderService: quantity <= 0
+        OrderService-->>UI: orderRejected(invalidQuantity)
+        UI-->>Customer: showQuantityError()
+        Note over OrderService: Stock is not checked
+        Note over OrderService: ORDER and ORDER_ITEM are not created
+    else Quantity is valid
+        Note over OrderService: Continue with successful flow SC-01
+    end
+
+    deactivate OrderService
+    deactivate UI
