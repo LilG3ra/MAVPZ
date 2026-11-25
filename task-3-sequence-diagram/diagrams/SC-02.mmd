@@ -1,0 +1,41 @@
+sequenceDiagram
+    actor Customer as Customer
+    participant UI as OrderUI
+    participant OrderService as OrderService
+    participant StockService as StockService
+    participant Database as Database
+
+    Customer->>UI: selectEdition(editionId, quantity)
+    UI->>UI: displaySelectedBooks()
+    Customer->>UI: enterContactData(contactData)
+    Customer->>UI: submitOrder()
+    activate UI
+
+    UI->>OrderService: submitOrder(contactData, items[])
+    activate OrderService
+
+    OrderService->>OrderService: validateContacts(contactData)
+    OrderService->>OrderService: validateQuantities(items[])
+
+    OrderService->>StockService: checkStock(editionId, quantity)
+    activate StockService
+
+    StockService->>Database: queryEditionStock(editionId)
+    activate Database
+    Database-->>StockService: stock(available)
+    deactivate Database
+
+    StockService-->>OrderService: stockCheck(available, quantity)
+    deactivate StockService
+
+    alt Insufficient stock
+        Note over OrderService: available < quantity
+        OrderService-->>UI: orderRejected(outOfStock)
+        UI-->>Customer: showOutOfStockError()
+        Note over OrderService,Database: ORDER and ORDER_ITEM are not created
+    else Sufficient stock
+        Note over OrderService: Continue with successful flow SC-01
+    end
+
+    deactivate OrderService
+    deactivate UI
