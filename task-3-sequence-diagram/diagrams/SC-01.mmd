@@ -1,0 +1,77 @@
+sequenceDiagram
+    actor Customer as Customer
+    participant UI as OrderUI
+    participant OrderService as OrderService
+    participant StockService as StockService
+    participant Database as Database
+
+    Customer->>UI: selectEditions(editions[], quantities[])
+    UI->>UI: displaySelectedBooks()
+    Customer->>UI: enterContactData(contactData)
+    Customer->>UI: submitOrder()
+    activate UI
+
+    UI->>OrderService: submitOrder(contactData, items[])
+    activate OrderService
+
+    OrderService->>OrderService: validateContacts(contactData)
+    OrderService->>OrderService: validateQuantities(items[])
+
+    alt Invalid contacts or quantities
+        OrderService-->>UI: orderRejected(validationError)
+        UI-->>Customer: showValidationError()
+    else Valid input
+        Note over OrderService: allAvailable = true
+
+        loop For each requested edition
+            OrderService->>StockService: checkStock(editionId, totalQuantity)
+            activate StockService
+            StockService->>Database: queryEditionStock(editionId)
+            activate Database
+            Database-->>StockService: available
+            deactivate Database
+            StockService-->>OrderService: stockCheck(available >= totalQuantity)
+            deactivate StockService
+            Note over OrderService: Update allAvailable
+        end
+
+        alt Insufficient stock for any edition
+            OrderService-->>UI: orderRejected(outOfStock)
+            UI-->>Customer: showOutOfStockError()
+        else All editions available
+            OrderService->>Database: createOrderAtomically(contactData, items[])
+            activate Database
+            Database->>Database: beginTransaction()
+
+            loop For each requested edition
+                Database->>Database: lockEditionAndReadStockAndPrice()
+            end
+
+            alt Stock changed or insufficient
+                Database->>Database: rollback()
+                Database-->>OrderService: orderRejected(outOfStock)
+            else All quantities available
+                Database->>Database: createOrderRecord(contactData)
+
+                loop For each order item
+                    Database->>Database: createOrderItem(editionId, quantity, priceSnapshot)
+                    Database->>Database: updateEditionStock(editionId, quantity)
+                end
+
+                Database->>Database: commit()
+                Database-->>OrderService: orderCreated(orderId, summary)
+            end
+            deactivate Database
+
+            alt Order successfully saved
+                OrderService-->>UI: orderCreated(orderId, summary)
+                UI-->>Customer: confirmationMessage(orderId, summary)
+            else Transaction rolled back
+                OrderService-->>UI: orderRejected(outOfStock)
+                UI-->>Customer: showOutOfStockError()
+            end
+        end
+    end
+
+    deactivate OrderService
+    deactivate UI
