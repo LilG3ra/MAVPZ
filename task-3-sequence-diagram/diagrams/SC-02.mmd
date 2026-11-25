@@ -30,8 +30,9 @@ sequenceDiagram
 
     alt Insufficient stock
         Note over OrderService: available < quantity
-        OrderService-->>UI: orderRejected(outOfStock)
-        UI-->>Customer: showOutOfStockError()
+        OrderService-->>UI: orderRejected(outOfStock, available)
+        UI-->>Customer: showOutOfStockError(available)
+        UI-->>Customer: showQuantityChangeOption()
         Note over OrderService,Database: ORDER and ORDER_ITEM are not created
     else Sufficient stock
         Note over OrderService: Continue with successful flow SC-01
