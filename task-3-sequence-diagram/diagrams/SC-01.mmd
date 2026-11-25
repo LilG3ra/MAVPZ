@@ -15,12 +15,14 @@ sequenceDiagram
     activate OrderService
 
     OrderService->>OrderService: validateContacts(contactData)
-    OrderService->>OrderService: validateQuantities(items[])
+    OrderService->>OrderService: validateItems(items[])
+    Note over OrderService: At least one item and all quantities > 0
 
-    alt Invalid contacts or quantities
+    alt Invalid contacts or items
         OrderService-->>UI: orderRejected(validationError)
         UI-->>Customer: showValidationError()
     else Valid input
+        OrderService->>OrderService: aggregateItemsByEdition(items[])
         Note over OrderService: allAvailable = true
 
         loop For each requested edition
@@ -38,13 +40,17 @@ sequenceDiagram
         alt Insufficient stock for any edition
             OrderService-->>UI: orderRejected(outOfStock)
             UI-->>Customer: showOutOfStockError()
+            Note over OrderService: ORDER and ORDER_ITEM are not created
         else All editions available
             OrderService->>Database: createOrderAtomically(contactData, items[])
             activate Database
             Database->>Database: beginTransaction()
+            Note over Database: transactionalStockValid = true
 
             loop For each requested edition
                 Database->>Database: lockEditionAndReadStockAndPrice()
+                Note over Database: Check totalQuantity and capture priceSnapshot
+                Note over Database: Update transactionalStockValid
             end
 
             alt Stock changed or insufficient
@@ -52,9 +58,10 @@ sequenceDiagram
                 Database-->>OrderService: orderRejected(outOfStock)
             else All quantities available
                 Database->>Database: createOrderRecord(contactData)
+                Note over Database: Generated orderId
 
                 loop For each order item
-                    Database->>Database: createOrderItem(editionId, quantity, priceSnapshot)
+                    Database->>Database: createOrderItem(orderId, editionId, quantity, priceSnapshot)
                     Database->>Database: updateEditionStock(editionId, quantity)
                 end
 
