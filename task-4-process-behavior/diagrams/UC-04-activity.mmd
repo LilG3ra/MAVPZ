@@ -1,0 +1,93 @@
+flowchart TD
+    START((Початок)) --> C1["Customer: selectEditions(editions[], quantities[])<br/>оформлення без реєстрації"]
+    C1 --> UI1["OrderUI: displaySelectedBooks()"]
+    UI1 --> C0["Customer: enterContactData(contactData)"]
+    C0 --> C2["Customer · Send Signal<br/>submitOrder()"]
+    C2 --> UI2["OrderUI · Accept Event<br/>submitOrder()"]
+    UI2 --> OS1["OrderUI → OrderService<br/>submitOrder(contactData, items[])"]
+    OS1 --> OS2["OrderService: validateContacts(contactData)"]
+    OS2 --> D1{"Обов'язкові контакти заповнено?"}
+    D1 -->|Ні · SC-04| E1["OrderService: missingContactData"]
+    D1 -->|Так| V1["OrderService: validateItems(items[])"]
+    V1 --> F1["FORK · AND"]
+    F1 --> V2["OrderService: перевірити наявність хоча б однієї позиції"]
+    F1 --> V3["OrderService: перевірити quantity ≥ 1 для кожної позиції"]
+    V2 --> J1["JOIN · AND<br/>дочекатися обох результатів"]
+    V3 --> J1
+    J1 --> D2{"Є хоча б одна позиція?"}
+    D2 -->|Ні| E2["OrderService: порожнє замовлення"]
+    D2 -->|Так| D3{"Усі кількості допустимі?"}
+    D3 -->|Ні · SC-03| E3["OrderService: invalidQuantity<br/>мінімальна кількість — 1"]
+    D3 -->|Так| OS3["OrderService: aggregateItemsByEdition(items[])"]
+    OS3 --> OS4["OrderService: для кожного EDITION<br/>checkStock(editionId, totalQuantity) → StockService"]
+    OS4 --> S1["StockService → Database<br/>queryEditionStock(editionId)"]
+    S1 --> S2["Database → StockService: available<br/>StockService → OrderService: stockCheck(available, totalQuantity)"]
+    S2 --> S3["OrderService: зберегти результат перевірки та available"]
+    S3 --> D4{"Є ще неперевірені видання?"}
+    D4 -->|Так| OS4
+    D4 -->|Ні| D5{"Усіх залишків достатньо?"}
+    D5 -->|Ні · SC-02| E4["OrderService: outOfStock, available<br/>для видань із нестачею"]
+    D5 -->|Так| DB0["OrderService → Database<br/>createOrderAtomically(contactData, items[])"]
+    DB0 --> DB1["Database: beginTransaction()"]
+    DB1 --> D0{"Транзакцію розпочато?"}
+    D0 -->|Ні| E5["Database → OrderService: технічна помилка<br/>транзакцію не розпочато"]
+    D0 -->|Так| DB2["Database: для кожного EDITION<br/>lockEditionAndReadStockAndPrice()<br/>перевірити сумарну кількість, зафіксувати priceSnapshot"]
+    DB2 --> D6{"Читання та блокування успішні?"}
+    D6 -->|Ні| RB2["Database: rollback()<br/>Database → OrderService: технічна помилка"]
+    D6 -->|Так| D7{"Є ще неперевірені видання?"}
+    D7 -->|Так| DB2
+    D7 -->|Ні| D8{"Усіх залишків у транзакції достатньо?"}
+    D8 -->|Ні| RB1["Database: rollback()<br/>Database → OrderService: orderRejected(outOfStock)"]
+    RB1 --> OS5["OrderService → StockService: checkStock()<br/>StockService → Database: queryEditionStock()<br/>для видань із нестачею, після rollback"]
+    OS5 --> OS6["Database → StockService: available<br/>StockService → OrderService: актуальний available"]
+    OS6 --> E4
+    D8 -->|Так| DB3["Database: createOrderRecord(contactData)<br/>отримати orderId"]
+    DB3 --> D9{"ORDER створено без помилки?"}
+    D9 -->|Ні| RB2
+    D9 -->|Так| DB4["Database: для кожної позиції<br/>calculateItemTotal(quantity, priceSnapshot)<br/>createOrderItem(orderId, editionId, quantity, priceSnapshot)<br/>updateEditionStock(editionId, quantity)"]
+    DB4 --> D10{"Операції позиції успішні?"}
+    D10 -->|Ні| RB2
+    D10 -->|Так| D11{"Є ще позиції?"}
+    D11 -->|Так| DB4
+    D11 -->|Ні| DB5["Database: commit()"]
+    DB5 --> D12{"Транзакцію успішно збережено?"}
+    D12 -->|Ні · підтверджено незбереження| RB2
+    D12 -->|Так · SC-01| DB6["Database → OrderService<br/>orderCreated(orderId, savedItems[])"]
+    DB6 --> OS7["OrderService: initializeOrderSummary(orderId)<br/>для кожного savedItem: addItemToSummary()<br/>quantity, priceSnapshot, itemTotal"]
+    OS7 --> OK1["OrderService · Send Signal<br/>orderCreated(orderId, summary) → OrderUI"]
+    OK1 --> OK2["OrderUI · Accept Event<br/>orderCreated(orderId, summary)"]
+    OK2 --> OK3["OrderUI · Send Signal<br/>confirmationMessage(orderId, summary) → Customer"]
+    OK3 --> OK4["Customer · Accept Event<br/>отримати підтвердження та підсумок"]
+    OK4 --> END((Кінець))
+    E1 --> REJ1
+    E2 --> REJ1
+    E3 --> REJ1
+    E4 --> REJ1
+    RB2 --> REJ1
+    E5 --> REJ1
+    REJ1["OrderService · Send Signal<br/>orderRejected(reason, available за потреби) → OrderUI"] --> REJ2["OrderUI · Accept Event<br/>orderRejected(reason, available за потреби)"]
+    REJ2 --> REJ3["OrderUI · Send Signal → Customer<br/>showContactDataError() / showQuantityError()<br/>showOutOfStockError(available), showQuantityChangeOption()<br/>або відповідне повідомлення про порожнє замовлення чи технічну помилку"]
+    REJ3 --> REJ4["Customer · Accept Event<br/>отримати повідомлення про помилку"]
+    REJ4 --> D13{"Повторити оформлення?"}
+    D13 -->|Так · виправити дані| C1
+    D13 -->|Ні| CANCEL["Customer: припинити оформлення"]
+    CANCEL --> END
+
+    classDef customer fill:#e8f1ff,stroke:#4777a8,color:#16324e;
+    classDef ui fill:#eaf7f7,stroke:#4f8f90,color:#173d40;
+    classDef service fill:#f1f0fb,stroke:#8175b4,color:#312852;
+    classDef db fill:#f1f4f7,stroke:#687b8d,color:#263746;
+    classDef stock fill:#fff4dc,stroke:#b38a37,color:#4f3b12;
+    classDef decision fill:#fff8e9,stroke:#b5944f,color:#493a18;
+    classDef error fill:#fcebed,stroke:#b96a72,color:#642e36;
+    classDef sync fill:#46566a,stroke:#46566a,color:#ffffff;
+    classDef terminal fill:#e8f2eb,stroke:#527c5d,color:#24452d;
+    class C1,C0,C2,OK4,REJ4,CANCEL customer;
+    class UI1,UI2,OS1,OK2,OK3,REJ2,REJ3 ui;
+    class OS2,V1,V2,V3,OS3,OS4,S3,DB0,OS5,OS6,OS7,OK1,REJ1 service;
+    class S1,S2 stock;
+    class DB1,DB2,DB3,DB4,DB5,DB6 db;
+    class D0,D1,D2,D3,D4,D5,D6,D7,D8,D9,D10,D11,D12,D13 decision;
+    class E1,E2,E3,E4,E5,RB1,RB2 error;
+    class F1,J1 sync;
+    class START,END terminal;
