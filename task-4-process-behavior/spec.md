@@ -42,7 +42,7 @@
 
 4. Відображено всі чотири сценарії, можливість повторної спроби та припинення оформлення замовлення. Відсутні недосяжні вузли та незавершені переходи.
 
-5. У разі виникнення помилки замовлення не створюється, а rollback() забезпечує відсутність частково збережених змін.
+5. У разі невдалої валідації чи недостатнього залишку або підтвердженого незбереження транзакції замовлення не створюється. rollback() активної транзакції забезпечує відсутність частково збережених змін.
 
 6. Діаграму звірено з [Gherkin](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/scenarios/UC-04-order-scenario.md), вимогами FR-07–FR-15, [Use Cases](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/diagrams/UC.md), [ER-моделлю](https://github.com/LilG3ra/MAVPZ/blob/main/task-1-domain-er/diagrams/er-model.md) та [Sequence Diagram](https://github.com/LilG3ra/MAVPZ/tree/main/task-3-sequence-diagram/diagrams) попередніх завдань.
 
