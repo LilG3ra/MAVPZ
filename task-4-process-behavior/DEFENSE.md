@@ -1,4 +1,4 @@
-# DEFENSE — Завдання 3: Взаємодія (Sequence Diagram)
+# Завдання №4 — Процес / поведінка (Activity Diagram)
 
 ## 1. Що я просила у ШІ
 
