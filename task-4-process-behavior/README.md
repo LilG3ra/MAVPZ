@@ -73,7 +73,7 @@ task-4-process-behavior/
 - [`adr/`](https://github.com/LilG3ra/MAVPZ/tree/main/task-4-process-behavior/adr) — обґрунтування трьох прийнятих рішень щодо вибору нотації, паралельних перевірок та обробки помилок.
 - [`ai/`](https://github.com/LilG3ra/MAVPZ/tree/main/task-4-process-behavior/ai) — запити до ШІ, огляди та історія перевірок.
 - [`CHECKLIST.md`](https://github.com/LilG3ra/MAVPZ/blob/main/task-4-process-behavior/CHECKLIST.md) — чеклист готовності завдання.
-- `DEFENSE.md` — матеріали для підсумкового захисту (у підготовці).
+- [`DEFENSE.md`](https://github.com/LilG3ra/MAVPZ/blob/main/task-4-process-behavior/DEFENSE.md) — матеріали для підсумкового захисту (у підготовці).
 
 ## Джерела вимог
 
