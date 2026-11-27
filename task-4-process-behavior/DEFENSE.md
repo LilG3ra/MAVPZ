@@ -38,12 +38,6 @@ config:
 
 **Коміт:** [7e0b237 - fix: Виправила відображення діаграми](https://github.com/LilG3ra/MAVPZ/commit/7e0b237).
 
-Також довгі текстові підписи було розділено на декілька рядків. Логіку процесу при цьому не змінювала. Під час фінального виправлення синхронізувала Mermaid-код у файлах .md та .mmd, щоб вони містили однакову версію діаграми та конфігурацію її відображення.
-
-**Мій слід:** [Взаємодія 04](https://github.com/LilG3ra/MAVPZ/blob/main/task-4-process-behavior/ai/04-prompt.md), [Огляд 04](https://github.com/LilG3ra/MAVPZ/blob/main/task-4-process-behavior/ai/04-review.md), [Activity Diagram](https://github.com/LilG3ra/MAVPZ/blob/main/task-4-process-behavior/diagrams/UC-04-activity.md).
-
-**Коміти:** [7e0b237 — fix: Виправила відображення діаграми](https://github.com/LilG3ra/MAVPZ/commit/7e0b237), [4ae64a4 — update: Оновила UC-04-activity.md](https://github.com/LilG3ra/MAVPZ/commit/4ae64a4).
-
 **2) Не було явно показано передавання ідентифікаторів видань після rollback().**
 
 Якщо подивитись на бізнес-правило №8 в специфікації, якщо під час транзакції залишок змінився і примірників недостатньо, то система виконує rollback(), отримує залишок та повідомляє покупцеві. Під час додаткової перевірки було виявлено, що в початковій діаграмі Database передавала лише orderRejected(outOfStock), без явного зазначення ідентифікаторів видань, для яких потрібно повторно перевірити залишки. Для виправлення я додала insufficientEditionIds та змінила повідомлення на orderRejected(outOfStock, insufficientEditionIds). Також додала два нові вузли OS8 та D14 і доповнила вже існуючі. 
@@ -78,4 +72,4 @@ MSG1 — відсутні обов'язкові контактні дані; MSG
 
 Під час перевірки я порівняла  Activity Diagram зі [специфікацією](https://github.com/LilG3ra/MAVPZ/blob/main/task-4-process-behavior/spec.md), [функціональними вимогами](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/requirements/functional.md), [Gherkin-сценаріями UC-04](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/scenarios/UC-04-order-scenario.md) та [Sequence Diagram Завдання №3](https://github.com/LilG3ra/MAVPZ/tree/main/task-3-sequence-diagram/diagrams). В тому числі переглянула учасників процесу, порядок перевірок, розгалуження if/else, Fork/Join, Send Signal, Accept Event, транзакційне оформлення замовлення та можливість повторної спроби. В матриці трасування перевірила відображення зв'язків з дев'ятьма функціональними вимогами та дев'ятьма Gherkin-сценаріями, як результат перевірки: все виконано коректно. Також я перевірила повторно рендер, оскільки виникли проблеми з відображенням діаграми, тому на неї я змістила більше фокусу, ніж на інші моменти. Реальне тестування застосунку не проводила, оскільки завдання передбачає моделювання поведінки системи, а не її програмну реалізацію.
 
-Усі матеріали третього завдання розміщуються в директорії [task-4-process-behavior](https://github.com/LilG3ra/MAVPZ/tree/main/task-4-process-behavior).
+Усі матеріали четвертого завдання розміщуються в директорії [task-4-process-behavior](https://github.com/LilG3ra/MAVPZ/tree/main/task-4-process-behavior).
