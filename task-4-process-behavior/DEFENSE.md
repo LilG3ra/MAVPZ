@@ -21,12 +21,46 @@
 **1) Неповне відображення тексту в блоках Activity Diagram.**
 
 Після того, як я підгрузила вихідний код в GitHub, і він відобразив діаграму, я помітила, що текст у деяких блоках відображався не повністю. Це не відповідало критерію прийняття №1 щодо читабельного представлення діаграми. Я повторно звернулася до ШІ, після чого на початок Mermaid-коду було додано параметри в самий початок коду. Добавлений код наведено нижче:
-htmlLabels: false, wrappingWidth: 350, nodeSpacing: 50, rankSpacing: 60 та padding: 15. Також довгі текстові підписи було розділено на декілька рядків. Логіку процесу при цьому не змінювала.
+
+```yaml
+---
+config:
+  htmlLabels: false
+  flowchart:
+    wrappingWidth: 350
+    nodeSpacing: 50
+    rankSpacing: 60
+    padding: 15
+---
+```
 
 **Мій слід:** [Взаємодія 04](https://github.com/LilG3ra/MAVPZ/blob/main/task-4-process-behavior/ai/04-prompt.md), [Огляд 04](https://github.com/LilG3ra/MAVPZ/blob/main/task-4-process-behavior/ai/04-review.md).
 
 **Коміт:** [7e0b237 - fix: Виправила відображення діаграми](https://github.com/LilG3ra/MAVPZ/commit/7e0b237).
 
+Також довгі текстові підписи було розділено на декілька рядків. Логіку процесу при цьому не змінювала. Під час фінального виправлення синхронізувала Mermaid-код у файлах .md та .mmd, щоб вони містили однакову версію діаграми та конфігурацію її відображення.
+
+**Мій слід:** [Взаємодія 04](https://github.com/LilG3ra/MAVPZ/blob/main/task-4-process-behavior/ai/04-prompt.md), [Огляд 04](https://github.com/LilG3ra/MAVPZ/blob/main/task-4-process-behavior/ai/04-review.md), [Activity Diagram](https://github.com/LilG3ra/MAVPZ/blob/main/task-4-process-behavior/diagrams/UC-04-activity.md).
+
+**Коміти:** [7e0b237 — fix: Виправила відображення діаграми](https://github.com/LilG3ra/MAVPZ/commit/7e0b237), [4ae64a4 — update: Оновила UC-04-activity.md](https://github.com/LilG3ra/MAVPZ/commit/4ae64a4).
+
+**2) Не було явно показано передавання ідентифікаторів видань після rollback().**
+
+Якщо подивитись на бізнес-правило №8 в специфікації, якщо під час транзакції залишок змінився і примірників недостатньо, то система виконує rollback(), отримує залишок та повідомляє покупцеві. Під час додаткової перевірки було виявлено, що в початковій діаграмі Database передавала лише orderRejected(outOfStock), без явного зазначення ідентифікаторів видань, для яких потрібно повторно перевірити залишки. Для виправлення я додала insufficientEditionIds та змінила повідомлення на orderRejected(outOfStock, insufficientEditionIds). Також додала два нові вузли OS8 та D14 і доповнила вже існуючі. 
+
+**Мій слід:** [Специфікація](https://github.com/LilG3ra/MAVPZ/blob/main/task-4-process-behavior/spec.md), [Вихідний код Mermaid](https://github.com/LilG3ra/MAVPZ/blob/main/task-4-process-behavior/diagrams/UC-04-activity.mmd), [Activity Diagram](https://github.com/LilG3ra/MAVPZ/blob/main/task-4-process-behavior/diagrams/UC-04-activity.md), [Матриця трасування](https://github.com/LilG3ra/MAVPZ/blob/main/task-4-process-behavior/traceability.md).
+
+**Коміти:** [4076463 — update: оновила код](https://github.com/LilG3ra/MAVPZ/commit/4076463), [4ae64a4 — update: Оновила UC-04-activity.md](https://github.com/LilG3ra/MAVPZ/commit/4ae64a4), [815a95d — update: Оновила traceability.md](https://github.com/LilG3ra/MAVPZ/commit/815a95d).
+
+**3) Не було окремих розгалужень для повідомлень про помилки.**
+
+Як каже бізнес правило №10 моєї специфікації, за некоректних даних покупець повинен отримати відповідне повідомлення про помилку та мати можливість виправити дані, повторити спробу або припинити оформлення замовлення. У початковій діаграмі ШІ об'єднав усі повідомлення про помилки в один блок REJ3. Через це не було показано, яке саме повідомлення отримує покупець залежно від причини відмови. Для виправлення я змінила блок REJ3 на умовне розгалуження за параметром reason та додала п'ять окремих вузлів:
+
+MSG1 — відсутні обов'язкові контактні дані; MSG2 — недопустима кількість примірників; MSG3 — недостатній складський залишок; MSG4 — порожнє замовлення; MSG5 — технічна помилка. Також у вузлах E1–E5 та RB2 явно визначила значення параметра reason. Після виправлення Activity Diagram оновила матрицю трасування для функціональних вимог FR-08, FR-09, FR-11, FR-12 та Gherkin-сценаріїв UC04-S02–UC04-S04 відповідно до нових вузлів.
+
+**Мій слід:** [Специфікація](https://github.com/LilG3ra/MAVPZ/blob/main/task-4-process-behavior/spec.md), [Функціональні вимоги](https://github.com/LilG3ra/MAVPZ/blob/main/task-2-requirements-use-case/requirements/functional.md), [Вихідний код Mermaid](https://github.com/LilG3ra/MAVPZ/blob/main/task-4-process-behavior/diagrams/UC-04-activity.mmd), [Activity Diagram](https://github.com/LilG3ra/MAVPZ/blob/main/task-4-process-behavior/diagrams/UC-04-activity.md), [Матриця трасування](https://github.com/LilG3ra/MAVPZ/blob/main/task-4-process-behavior/traceability.md).
+
+**Коміти:** [4076463 — update: оновила код](https://github.com/LilG3ra/MAVPZ/commit/4076463), [4ae64a4 — update: Оновила UC-04-activity.md](https://github.com/LilG3ra/MAVPZ/commit/4ae64a4), [815a95d — update: Оновила traceability.md](https://github.com/LilG3ra/MAVPZ/commit/815a95d).
 
 ## 3. Ключове рішення
 
